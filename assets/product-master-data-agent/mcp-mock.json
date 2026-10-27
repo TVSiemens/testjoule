@@ -1,0 +1,770 @@
+{
+  "servers": {
+    "sap-s4-ce-product-0003": {
+      "mcp_server_name": "sap.mcp/sap_self",
+      "description": "MCP server exposing SAP S/4HANA Cloud Product master data via CE_PRODUCT_0003 OData v4 API",
+      "tools": {
+        "get_metadata_sap_self": {
+          "description": "Retrieve OData service metadata document for schema discovery",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "mock_response": {
+            "metadata": "<edmx:Edmx Version=\"4.0\"><edmx:DataServices><Schema Namespace=\"sap.s4.beh.product.v1.product\"></Schema></edmx:DataServices></edmx:Edmx>"
+          }
+        },
+        "batch_for_sap_self": {
+          "description": "Execute batch OData requests",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "requests": {"type": "array", "description": "Array of batch requests"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "responses": []
+          }
+        },
+        "list_product_for_sap_self": {
+          "description": "Retrieve a list of products from SAP S/4HANA",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "orderby": {"type": "string", "description": "Sort order"},
+              "top": {"type": "string", "description": "Maximum number of records to return"},
+              "skip": {"type": "string", "description": "Number of records to skip"},
+              "expand": {"type": "string", "description": "Related entities to expand"},
+              "count": {"type": "string", "description": "Include count of results"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "ProductType": "FERT",
+                "BaseUnit": "EA",
+                "BaseISOUnit": "C62",
+                "ProductGroup": "ELEC",
+                "Division": "01",
+                "GrossWeight": "2.500",
+                "WeightUnit": "KG",
+                "NetWeight": "2.200",
+                "IsMarkedForDeletion": false,
+                "CrossPlantStatus": "20",
+                "IndustrySector": "M",
+                "CreationDateTime": "/Date(1580000000000)/"
+              },
+              {
+                "Product": "P-100",
+                "ProductType": "HAWA",
+                "BaseUnit": "PC",
+                "BaseISOUnit": "C62",
+                "ProductGroup": "MECH",
+                "Division": "01",
+                "GrossWeight": "0.500",
+                "WeightUnit": "KG",
+                "NetWeight": "0.450",
+                "IsMarkedForDeletion": false,
+                "CrossPlantStatus": "20",
+                "IndustrySector": "M",
+                "CreationDateTime": "/Date(1590000000000)/"
+              }
+            ]
+          }
+        },
+        "get_product_for_sap_self": {
+          "description": "Retrieve a single product by product ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "expand": {"type": "string", "description": "Related entities to expand"}
+            },
+            "required": ["product"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "ProductType": "FERT",
+            "BaseUnit": "EA",
+            "BaseISOUnit": "C62",
+            "ProductGroup": "ELEC",
+            "Division": "01",
+            "GrossWeight": "2.500",
+            "WeightUnit": "KG",
+            "NetWeight": "2.200",
+            "IsMarkedForDeletion": false,
+            "CrossPlantStatus": "20",
+            "IndustrySector": "M",
+            "CreationDateTime": "/Date(1580000000000)/"
+          }
+        },
+        "list_productbasictext_for_sap_self": {
+          "description": "Retrieve basic text descriptions for products",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "Language": "EN",
+                "TextObjectType": "GRUN",
+                "LongText": "High-performance electronic control module for industrial automation systems."
+              }
+            ]
+          }
+        },
+        "get_productbasictext_for_sap_self": {
+          "description": "Retrieve basic text for a specific product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "textobjecttype": {"type": "string", "description": "Text object type"},
+              "language": {"type": "string", "description": "Language code"}
+            },
+            "required": ["product", "textobjecttype", "language"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "Language": "EN",
+            "TextObjectType": "GRUN",
+            "LongText": "High-performance electronic control module for industrial automation systems."
+          }
+        },
+        "list_productdescription_for_sap_self": {
+          "description": "Retrieve product descriptions in one or more languages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "Language": "EN",
+                "ProductDescription": "Electronic Control Module TG11"
+              },
+              {
+                "Product": "P-100",
+                "Language": "EN",
+                "ProductDescription": "Mechanical Bearing Assembly P-100"
+              }
+            ]
+          }
+        },
+        "get_productdescription_for_sap_self": {
+          "description": "Retrieve description for a specific product and language",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "language": {"type": "string", "description": "Language code (e.g. EN)"}
+            },
+            "required": ["product", "language"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "Language": "EN",
+            "ProductDescription": "Electronic Control Module TG11"
+          }
+        },
+        "list_productplant_for_sap_self": {
+          "description": "Retrieve plant-specific data for products",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "Plant": "1010",
+                "ProcurementType": "E",
+                "AvailabilityCheckType": "02",
+                "PlannedDeliveryDurationInDays": "3"
+              }
+            ]
+          }
+        },
+        "get_productplant_for_sap_self": {
+          "description": "Retrieve plant data for a specific product and plant",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "plant": {"type": "string", "description": "Plant code"}
+            },
+            "required": ["product", "plant"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "Plant": "1010",
+            "ProcurementType": "E",
+            "AvailabilityCheckType": "02",
+            "PlannedDeliveryDurationInDays": "3"
+          }
+        },
+        "list_productsalesdelivery_for_sap_self": {
+          "description": "Retrieve sales and delivery data for products",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "ProductSalesOrg": "1010",
+                "ProductDistributionChnl": "10",
+                "ProductSalesStatus": "01",
+                "DeliveryQuantityUnit": "EA",
+                "ItemCategoryGroup": "NORM"
+              }
+            ]
+          }
+        },
+        "get_productsalesdelivery_for_sap_self": {
+          "description": "Retrieve sales and delivery data for a specific product, sales org, and distribution channel",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "productsalesorg": {"type": "string", "description": "Sales organization"},
+              "productdistributionchnl": {"type": "string", "description": "Distribution channel"}
+            },
+            "required": ["product", "productsalesorg", "productdistributionchnl"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "ProductSalesOrg": "1010",
+            "ProductDistributionChnl": "10",
+            "ProductSalesStatus": "01",
+            "DeliveryQuantityUnit": "EA",
+            "ItemCategoryGroup": "NORM"
+          }
+        },
+        "list_productunitofmeasure_for_sap_self": {
+          "description": "Retrieve unit of measure conversions for products",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "AlternativeUnit": "EA",
+                "AlternativeISOUnit": "C62",
+                "QuantityNumerator": "1",
+                "QuantityDenominator": "1"
+              }
+            ]
+          }
+        },
+        "get_productunitofmeasure_for_sap_self": {
+          "description": "Retrieve unit of measure for a specific product and alternative unit",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "alternativeunit": {"type": "string", "description": "Alternative unit of measure"}
+            },
+            "required": ["product", "alternativeunit"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "AlternativeUnit": "EA",
+            "AlternativeISOUnit": "C62",
+            "QuantityNumerator": "1",
+            "QuantityDenominator": "1"
+          }
+        }
+      }
+    },
+    "sap-s4-clfn-product-srv": {
+      "mcp_server_name": "sap.mcp/api_clfn_product_srv",
+      "description": "MCP server exposing SAP S/4HANA product classification data via API_CLFN_PRODUCT_SRV",
+      "tools": {
+        "get_metadata_api_clfn_product_srv": {
+          "description": "Retrieve OData service metadata for classification API",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "mock_response": {
+            "metadata": "<edmx:Edmx Version=\"1.0\"><edmx:DataServices><Schema Namespace=\"API_CLFN_PRODUCT_SRV\"></Schema></edmx:DataServices></edmx:Edmx>"
+          }
+        },
+        "batch_for_api_clfn_product_srv": {
+          "description": "Execute batch OData requests for classification API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "requests": {"type": "array", "description": "Batch requests"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "responses": []
+          }
+        },
+        "list_a_clfnproduct_for_api_clfn_product_srv": {
+          "description": "Retrieve classification data for products",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "ClassName": "Electronic Components"
+              }
+            ]
+          }
+        },
+        "get_a_clfnproduct_for_api_clfn_product_srv": {
+          "description": "Retrieve classification data for a specific product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "classtype": {"type": "string", "description": "Classification type"},
+              "classinternalid": {"type": "string", "description": "Class internal ID"}
+            },
+            "required": ["product", "classtype", "classinternalid"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "ClassType": "001",
+            "ClassInternalID": "CL_ELEC_001",
+            "ClassName": "Electronic Components"
+          }
+        },
+        "list_a_clfnclassforkeydate_for_api_clfn_product_srv": {
+          "description": "Retrieve classification class data for a key date",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "ClassName": "Electronic Components",
+                "ClassDescription": "Classification for electronic and electrical components"
+              }
+            ]
+          }
+        },
+        "get_a_clfnclassforkeydate_for_api_clfn_product_srv": {
+          "description": "Retrieve a specific classification class by key date",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classtype": {"type": "string", "description": "Classification type"},
+              "classinternalid": {"type": "string", "description": "Class internal ID"}
+            },
+            "required": ["classtype", "classinternalid"]
+          },
+          "mock_response": {
+            "ClassType": "001",
+            "ClassInternalID": "CL_ELEC_001",
+            "ClassName": "Electronic Components",
+            "ClassDescription": "Classification for electronic and electrical components"
+          }
+        },
+        "list_a_productcharc_for_api_clfn_product_srv": {
+          "description": "Retrieve characteristic values assigned to a product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "CharcInternalID": "VOLTAGE",
+                "CharcValue": "24V"
+              },
+              {
+                "Product": "TG11",
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "CharcInternalID": "CURRENT_RATING",
+                "CharcValue": "5A"
+              }
+            ]
+          }
+        },
+        "get_a_productcharc_for_api_clfn_product_srv": {
+          "description": "Retrieve a specific characteristic value for a product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "classtype": {"type": "string", "description": "Classification type"},
+              "classinternalid": {"type": "string", "description": "Class internal ID"},
+              "charcinternalid": {"type": "string", "description": "Characteristic internal ID"}
+            },
+            "required": ["product", "classtype", "classinternalid", "charcinternalid"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "ClassType": "001",
+            "ClassInternalID": "CL_ELEC_001",
+            "CharcInternalID": "VOLTAGE",
+            "CharcValue": "24V"
+          }
+        },
+        "list_a_productcharcvalue_for_api_clfn_product_srv": {
+          "description": "Retrieve characteristic value details for a product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "CharcInternalID": "VOLTAGE",
+                "CharcValue": "24V",
+                "CharcValueDescription": "Operating voltage 24 Volts DC"
+              }
+            ]
+          }
+        },
+        "get_a_productcharcvalue_for_api_clfn_product_srv": {
+          "description": "Retrieve a specific characteristic value for a product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "classtype": {"type": "string", "description": "Classification type"},
+              "classinternalid": {"type": "string", "description": "Class internal ID"},
+              "charcinternalid": {"type": "string", "description": "Characteristic internal ID"},
+              "charcvalue": {"type": "string", "description": "Characteristic value"}
+            },
+            "required": ["product", "classtype", "classinternalid", "charcinternalid", "charcvalue"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "ClassType": "001",
+            "ClassInternalID": "CL_ELEC_001",
+            "CharcInternalID": "VOLTAGE",
+            "CharcValue": "24V",
+            "CharcValueDescription": "Operating voltage 24 Volts DC"
+          }
+        },
+        "list_a_productclass_for_api_clfn_product_srv": {
+          "description": "Retrieve classes assigned to a product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Product": "TG11",
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "ClassName": "Electronic Components"
+              }
+            ]
+          }
+        },
+        "get_a_productclass_for_api_clfn_product_srv": {
+          "description": "Retrieve a specific class assignment for a product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product": {"type": "string", "description": "Product identifier"},
+              "classtype": {"type": "string", "description": "Classification type"},
+              "classinternalid": {"type": "string", "description": "Class internal ID"}
+            },
+            "required": ["product", "classtype", "classinternalid"]
+          },
+          "mock_response": {
+            "Product": "TG11",
+            "ClassType": "001",
+            "ClassInternalID": "CL_ELEC_001",
+            "ClassName": "Electronic Components"
+          }
+        },
+        "list_a_productclasscharc_for_api_clfn_product_srv": {
+          "description": "Retrieve characteristics defined for a product class",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "CharcInternalID": "VOLTAGE",
+                "CharcDescription": "Operating Voltage"
+              },
+              {
+                "ClassType": "001",
+                "ClassInternalID": "CL_ELEC_001",
+                "CharcInternalID": "CURRENT_RATING",
+                "CharcDescription": "Current Rating in Amperes"
+              }
+            ]
+          }
+        },
+        "get_a_productclasscharc_for_api_clfn_product_srv": {
+          "description": "Retrieve a specific characteristic defined for a product class",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classtype": {"type": "string", "description": "Classification type"},
+              "classinternalid": {"type": "string", "description": "Class internal ID"},
+              "charcinternalid": {"type": "string", "description": "Characteristic internal ID"}
+            },
+            "required": ["classtype", "classinternalid", "charcinternalid"]
+          },
+          "mock_response": {
+            "ClassType": "001",
+            "ClassInternalID": "CL_ELEC_001",
+            "CharcInternalID": "VOLTAGE",
+            "CharcDescription": "Operating Voltage"
+          }
+        }
+      }
+    },
+    "sap-s4-material-stock-srv": {
+      "mcp_server_name": "sap.mcp/api_material_stock_srv",
+      "description": "MCP server exposing SAP S/4HANA material stock read operations via API_MATERIAL_STOCK_SRV",
+      "tools": {
+        "get_metadata_api_material_stock_srv": {
+          "description": "Retrieve OData service metadata for material stock API",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "mock_response": {
+            "metadata": "<edmx:Edmx Version=\"1.0\"><edmx:DataServices><Schema Namespace=\"API_MATERIAL_STOCK_SRV\"></Schema></edmx:DataServices></edmx:Edmx>"
+          }
+        },
+        "batch_for_api_material_stock_srv": {
+          "description": "Execute batch OData requests for material stock API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "requests": {"type": "array", "description": "Batch requests"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "responses": []
+          }
+        },
+        "list_a_materialstock_for_api_material_stock_srv": {
+          "description": "Retrieve material stock levels across plants and storage locations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression (e.g. Material eq 'TG11')"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Material": "TG11",
+                "Plant": "1010",
+                "StorageLocation": "0001",
+                "MatlWrhsStkQtyInMatlBaseUnit": "250.000",
+                "MaterialBaseUnit": "EA",
+                "WrhsStockQtyInMatlBaseISOUnit": "250.000",
+                "MaterialBaseISOUnit": "C62"
+              },
+              {
+                "Material": "TG11",
+                "Plant": "1010",
+                "StorageLocation": "0002",
+                "MatlWrhsStkQtyInMatlBaseUnit": "75.000",
+                "MaterialBaseUnit": "EA",
+                "WrhsStockQtyInMatlBaseISOUnit": "75.000",
+                "MaterialBaseISOUnit": "C62"
+              }
+            ]
+          }
+        },
+        "get_a_materialstock_for_api_material_stock_srv": {
+          "description": "Retrieve material stock for a specific material, plant, and storage location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "material": {"type": "string", "description": "Material/product number"},
+              "plant": {"type": "string", "description": "Plant code"},
+              "storagelocation": {"type": "string", "description": "Storage location code"}
+            },
+            "required": ["material", "plant", "storagelocation"]
+          },
+          "mock_response": {
+            "Material": "TG11",
+            "Plant": "1010",
+            "StorageLocation": "0001",
+            "MatlWrhsStkQtyInMatlBaseUnit": "250.000",
+            "MaterialBaseUnit": "EA",
+            "WrhsStockQtyInMatlBaseISOUnit": "250.000",
+            "MaterialBaseISOUnit": "C62"
+          }
+        },
+        "list_a_matlstkinacctmod_for_api_material_stock_srv": {
+          "description": "Retrieve material stock in account modification (valuated stock) for materials",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {"type": "string", "description": "OData filter expression"},
+              "select": {"type": "string", "description": "Fields to return"},
+              "top": {"type": "string", "description": "Maximum number of records"},
+              "skip": {"type": "string", "description": "Number of records to skip"}
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "Material": "TG11",
+                "Plant": "1010",
+                "StorageLocation": "0001",
+                "ValuationType": "",
+                "StockOwner": "",
+                "MatlStkQtyInMatlBaseUnit": "250.000",
+                "MaterialBaseUnit": "EA"
+              }
+            ]
+          }
+        },
+        "get_a_matlstkinacctmod_for_api_material_stock_srv": {
+          "description": "Retrieve valuated stock for a specific material, plant, storage location, and valuation type",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "material": {"type": "string", "description": "Material/product number"},
+              "plant": {"type": "string", "description": "Plant code"},
+              "storagelocation": {"type": "string", "description": "Storage location code"},
+              "valuationtype": {"type": "string", "description": "Valuation type"},
+              "stockowner": {"type": "string", "description": "Stock owner"}
+            },
+            "required": ["material", "plant", "storagelocation", "valuationtype", "stockowner"]
+          },
+          "mock_response": {
+            "Material": "TG11",
+            "Plant": "1010",
+            "StorageLocation": "0001",
+            "ValuationType": "",
+            "StockOwner": "",
+            "MatlStkQtyInMatlBaseUnit": "250.000",
+            "MaterialBaseUnit": "EA"
+          }
+        }
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created_for_agent": "product-master-data-agent",
+    "mock_mode": true,
+    "deterministic": true,
+    "total_servers": 3,
+    "total_tools": 34,
+    "generated_from": [
+      "assets/sap-s4-ce-product-0003-mcp-server/mcp-translation/translation.json",
+      "assets/sap-s4-clfn-product-srv-mcp-server/mcp-translation/translation.json",
+      "assets/sap-s4-material-stock-srv-mcp-server/mcp-translation/translation.json"
+    ],
+    "generation_date": "2026-10-27"
+  }
+}

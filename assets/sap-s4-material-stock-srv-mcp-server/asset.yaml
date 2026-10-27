@@ -1,0 +1,21 @@
+apiVersion: asset.sap/v1
+kind: Asset
+type: mcp-server
+
+metadata:
+  name: sap-s4-material-stock-srv-mcp-server
+  description: Exposes SAP S/4HANA material stock read operations as MCP tools via the API_MATERIAL_STOCK_SRV OData API
+  version: "1.0.0"
+  translation: mcp-translation/translation.json
+  apiSpec: mcp-translation/api-spec.edmx
+
+requires:
+  - name: API_MATERIAL_STOCK_SRV
+    kind: api
+    ordId: sap.s4:apiResource:API_MATERIAL_STOCK_SRV:v1
+
+provides:
+  apis:
+    - name: sap-s4-material-stock-srv-mcp-server
+      kind: mcp-server
+      ordId: customer.build:apiResource:product-master-data-agent-5c496.sap-s4-material-stock-srv-mcp-server:v1
